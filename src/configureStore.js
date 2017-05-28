@@ -7,12 +7,12 @@ const addLoggingToDispatch = store => {
     return rawDispatch;
   }
   return action => {
-    console.group(action.type);
-    console.log('%c prev state', 'color: gray', store.getState());
-    console.log('%c action', 'color: blue', action);
+    // console.group(action.type);
+    // console.log('%c prev state', 'color: gray', store.getState());
+    // console.log('%c action', 'color: blue', action);
     const returnValue = rawDispatch(action);
-    console.log('%c nextState', 'color: green', store.getState());
-    console.groupEnd(action.type);
+    // console.log('%c nextState', 'color: green', store.getState());
+    // console.groupEnd(action.type);
     return returnValue;
   };
 };

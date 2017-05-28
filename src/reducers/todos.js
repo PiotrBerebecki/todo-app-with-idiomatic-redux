@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
 import todo from './todo';
-import { ADD_TODO, TOGGLE_TODO } from './constants';
+import { ADD_TODO, TOGGLE_TODO } from './../constants/index';
 
 const byId = (state = {}, action) => {
   switch (action.type) {

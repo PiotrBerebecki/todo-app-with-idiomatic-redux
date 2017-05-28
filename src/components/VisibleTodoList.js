@@ -5,27 +5,31 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 
 import { getVisibleTodos } from './../reducers/index';
-import { toggleTodo } from '../actions';
+import * as actions from '../actions';
 import Todo from './Todo';
 import { fetchTodos } from './../api/index';
 
 class VisibleTodoList extends Component {
   componentDidMount(prevProps) {
-    fetchTodos(this.props.filter).then(todos => {
-      console.log(this.props.filter, todos);
-    });
+    this.fetchData();
   }
 
   componentDidUpdate(prevProps) {
+    // user has navigated if not equal
     if (this.props.filter !== prevProps.filter) {
-      fetchTodos(this.props.filter).then(todos => {
-        console.log(this.props.filter, todos);
-      });
+      this.fetchData();
     }
   }
 
+  fetchData() {
+    const { filter, receiveTodos } = this.props;
+    fetchTodos(filter).then(todos => {
+      receiveTodos(filter, todos);
+    });
+  }
+
   handleClick = id => {
-    toggleTodo(id);
+    this.props.toggleTodo(id);
   };
 
   render() {
@@ -64,6 +68,4 @@ const mapStateToProps = (state, ownProps) => {
 
 // rather than above we can use
 // mapDispatchToProps shorthand "when Map Dispatch To Props Is Object"
-export default withRouter(
-  connect(mapStateToProps, { toggleTodo })(VisibleTodoList)
-);
+export default withRouter(connect(mapStateToProps, actions)(VisibleTodoList));
