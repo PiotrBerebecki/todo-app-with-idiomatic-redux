@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { withRouter } from 'react-router-dom';
 
 import { toggleTodo } from '../actions';
 import Todo from './Todo';
@@ -45,8 +46,9 @@ const getVisibleTodos = (todos, filter) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
+  console.log(ownProps);
   return {
-    todos: getVisibleTodos(state.todos, ownProps.filter),
+    todos: getVisibleTodos(state.todos, ownProps.match.params.filter || 'all'),
   };
 };
 
@@ -54,4 +56,6 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators({ toggleTodo }, dispatch);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(VisibleTodoList);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(VisibleTodoList)
+);
