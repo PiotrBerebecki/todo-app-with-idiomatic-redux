@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 
+import { getVisibleTodos } from './../reducers/index';
 import { toggleTodo } from '../actions';
 import Todo from './Todo';
 
@@ -32,22 +33,9 @@ VisibleTodoList.propTypes = {
   toggleTodo: PropTypes.func.isRequired,
 };
 
-const getVisibleTodos = (todos, filter) => {
-  switch (filter) {
-    case 'all':
-      return todos;
-    case 'completed':
-      return todos.filter(t => t.isCompleted);
-    case 'active':
-      return todos.filter(t => !t.isCompleted);
-    default:
-      throw new Error(`Unknown filter: ${filter}.`);
-  }
-};
-
 const mapStateToProps = (state, ownProps) => {
   return {
-    todos: getVisibleTodos(state.todos, ownProps.match.params.filter || 'all'),
+    todos: getVisibleTodos(state, ownProps.match.params.filter || 'all'),
   };
 };
 
