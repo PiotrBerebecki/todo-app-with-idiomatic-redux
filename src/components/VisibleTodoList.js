@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -7,20 +7,37 @@ import { withRouter } from 'react-router-dom';
 import { getVisibleTodos } from './../reducers/index';
 import { toggleTodo } from '../actions';
 import Todo from './Todo';
+import { fetchTodos } from './../api/index';
 
-const VisibleTodoList = ({ todos, toggleTodo }) => {
-  const handleClick = id => {
+class VisibleTodoList extends Component {
+  componentDidMount(prevProps) {
+    fetchTodos(this.props.filter).then(todos => {
+      console.log(this.props.filter, todos);
+    });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.filter !== prevProps.filter) {
+      fetchTodos(this.props.filter).then(todos => {
+        console.log(this.props.filter, todos);
+      });
+    }
+  }
+
+  handleClick = id => {
     toggleTodo(id);
   };
 
-  return (
-    <ul>
-      {todos.map(todo => (
-        <Todo key={todo.id} {...todo} onClick={handleClick} />
-      ))}
-    </ul>
-  );
-};
+  render() {
+    return (
+      <ul>
+        {this.props.todos.map(todo => (
+          <Todo key={todo.id} {...todo} onClick={this.handleClick} />
+        ))}
+      </ul>
+    );
+  }
+}
 
 VisibleTodoList.propTypes = {
   todos: PropTypes.arrayOf(
@@ -34,8 +51,10 @@ VisibleTodoList.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
+  const filter = ownProps.match.params.filter || 'all';
   return {
-    todos: getVisibleTodos(state, ownProps.match.params.filter || 'all'),
+    todos: getVisibleTodos(state, filter),
+    filter,
   };
 };
 
