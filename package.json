@@ -21,6 +21,7 @@
     "react-redux": "^4.4.5",
     "react-router-dom": "^4.1.1",
     "redux": "^3.5.2",
+    "redux-promise": "^0.5.3",
     "uuid": "^3.0.1"
   },
   "devDependencies": {
@@ -37,6 +38,7 @@
     "eslint-plugin-jsx-a11y": "^1.0.4",
     "eslint-plugin-react": "^5.0.1",
     "express": "^4.13.3",
+    "redux-logger": "^3.0.6",
     "webpack": "^1.9.11",
     "webpack-dev-middleware": "^1.2.0"
   }
