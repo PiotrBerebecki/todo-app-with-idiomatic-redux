@@ -46,16 +46,17 @@ const getVisibleTodos = (todos, filter) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(ownProps);
   return {
     todos: getVisibleTodos(state.todos, ownProps.match.params.filter || 'all'),
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ toggleTodo }, dispatch);
-};
+// const mapDispatchToProps = dispatch => {
+//   return bindActionCreators({ toggleTodo }, dispatch);
+// };
 
+// rather than above we can use
+// mapDispatchToProps shorthand "when Map Dispatch To Props Is Object"
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(VisibleTodoList)
+  connect(mapStateToProps, { toggleTodo })(VisibleTodoList)
 );
