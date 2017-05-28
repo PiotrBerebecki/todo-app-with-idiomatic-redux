@@ -1,6 +1,33 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import { setVisibilityFilter } from '../actions';
-import Link from './Link';
+
+const FilterLink = ({ active, children, setVisibilityFilter, filter }) => {
+  const handleClick = e => {
+    e.preventDefault();
+    setVisibilityFilter(filter);
+  };
+
+  if (active) {
+    return <span>{children}</span>;
+  }
+
+  return (
+    <a href="#" onClick={handleClick}>
+      {children}
+    </a>
+  );
+};
+
+FilterLink.propTypes = {
+  active: PropTypes.bool.isRequired,
+  children: PropTypes.node.isRequired,
+  setVisibilityFilter: PropTypes.func.isRequired,
+  filter: PropTypes.string.isRequired,
+};
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -8,17 +35,8 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    onClick: () => {
-      dispatch(setVisibilityFilter(ownProps.filter));
-    },
-  };
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ setVisibilityFilter }, dispatch);
 };
 
-const FilterLink = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Link);
-
-export default FilterLink;
+export default connect(mapStateToProps, mapDispatchToProps)(FilterLink);

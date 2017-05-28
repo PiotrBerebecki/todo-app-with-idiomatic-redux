@@ -1,33 +1,49 @@
-import React, { PropTypes } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { addTodo } from '../actions';
 
-const AddTodo = ({ dispatch }) => {
-  let input;
+class AddTodo extends Component {
+  state = {
+    todo: '',
+  };
 
-  return (
-    <div>
-      <form
-        onSubmit={e => {
-          e.preventDefault();
-          if (!input.value.trim()) {
-            return;
-          }
-          dispatch(addTodo(input.value));
-          input.value = '';
-        }}
-      >
-        <input ref={node => { input = node; }} />
-        <button type="submit">
-          Add Todo
-        </button>
-      </form>
-    </div>
-  );
+  handleText = e => {
+    this.setState({
+      todo: e.target.value,
+    });
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+
+    if (this.state.todo === '') {
+      return;
+    }
+
+    this.props.addTodo(this.state.todo);
+
+    this.setState({
+      todo: '',
+    });
+  };
+
+  render() {
+    return (
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          <input value={this.state.todo} onChange={this.handleText} />
+          <button type="submit">
+            Add Todo
+          </button>
+        </form>
+      </div>
+    );
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ addTodo }, dispatch);
 };
 
-AddTodo.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-};
-
-export default connect()(AddTodo);
+export default connect(null, mapDispatchToProps)(AddTodo);
