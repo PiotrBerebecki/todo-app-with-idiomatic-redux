@@ -2,7 +2,7 @@
 
 The todo app created while following Dan Abramov's [Building React Applications with Idiomatic Redux](https://egghead.io/courses/building-react-applications-with-idiomatic-redux) course:
 
-Community notes available here: https://github.com/PiotrBerebecki/todo-app-with-idiomatic-redux/notes
+Community notes available here: https://github.com/PiotrBerebecki/todo-app-with-idiomatic-redux/tree/master/notes
 
 
 # Notes:
