@@ -2,7 +2,7 @@ import { createStore, applyMiddleware } from 'redux';
 import promise from 'redux-promise';
 import logger from 'redux-logger';
 
-import todoApp from './reducers';
+import todoApp from './reducers/index';
 
 const configureStore = () => {
   const middlewares = [promise];
