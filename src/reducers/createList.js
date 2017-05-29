@@ -5,9 +5,19 @@ import {
   FETCH_TODOS_SUCCESS,
   FETCH_TODOS_FAILURE,
   ADD_TODO_SUCCESS,
+  TOGGLE_TODO_SUCCESS,
 } from './../constants/index';
 
 const createList = filter => {
+  const handleToggle = (state, action) => {
+    const { result: toggledId, entities } = action.response;
+    const { completed } = entities.todos[toggledId];
+    const shouldRemove =
+      (completed && filter === 'active') ||
+      (!completed && filter === 'completed');
+    return shouldRemove ? state.filter(id => id !== toggledId) : state;
+  };
+
   const ids = (state = [], action) => {
     switch (action.type) {
       case FETCH_TODOS_SUCCESS:
@@ -16,6 +26,8 @@ const createList = filter => {
         return filter !== 'completed'
           ? [...state, action.response.result]
           : state;
+      case TOGGLE_TODO_SUCCESS:
+        return handleToggle(state, action);
       default:
         return state;
     }

@@ -4,7 +4,7 @@ import * as schema from './schema';
 import * as api from './../api/index';
 import { getIsFetching } from './../reducers/index';
 import {
-  TOGGLE_TODO,
+  TOGGLE_TODO_SUCCESS,
   FETCH_TODOS_REQUEST,
   FETCH_TODOS_SUCCESS,
   FETCH_TODOS_FAILURE,
@@ -23,9 +23,13 @@ export const addTodo = text => {
 };
 
 export const toggleTodo = id => {
-  return {
-    type: TOGGLE_TODO,
-    id,
+  return dispatch => {
+    api.toggleTodo(id).then(response => {
+      dispatch({
+        type: TOGGLE_TODO_SUCCESS,
+        response: normalize(response, schema.todo),
+      });
+    });
   };
 };
 

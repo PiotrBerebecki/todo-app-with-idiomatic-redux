@@ -8,17 +8,17 @@ const fakeDatabase = {
     {
       id: uuid(),
       text: 'hey',
-      isCompleted: true,
+      completed: true,
     },
     {
       id: uuid(),
       text: 'ho',
-      isCompleted: true,
+      completed: true,
     },
     {
       id: uuid(),
       text: 'let’s go',
-      isCompleted: false,
+      completed: false,
     },
   ],
 };
@@ -27,7 +27,7 @@ const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 export const fetchTodos = filter =>
   delay(1000).then(() => {
-    if (Math.random() > 0.5) {
+    if (Math.random() > 0.9999) {
       throw new Error('BoomErr!');
     }
 
@@ -35,9 +35,9 @@ export const fetchTodos = filter =>
       case 'all':
         return fakeDatabase.todos;
       case 'active':
-        return fakeDatabase.todos.filter(t => !t.isCompleted);
+        return fakeDatabase.todos.filter(t => !t.completed);
       case 'completed':
-        return fakeDatabase.todos.filter(t => t.isCompleted);
+        return fakeDatabase.todos.filter(t => t.completed);
       default:
         throw new Error(`Unknown filter: ${filter}`);
     }
@@ -48,7 +48,7 @@ export const addTodo = text =>
     const todo = {
       id: uuid(),
       text,
-      isCompleted: false,
+      completed: false,
     };
     fakeDatabase.todos.push(todo);
     return todo;

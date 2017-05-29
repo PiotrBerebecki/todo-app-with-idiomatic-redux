@@ -59,7 +59,7 @@ VisibleTodoList.propTypes = {
   todos: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
-      isCompleted: PropTypes.bool.isRequired,
+      completed: PropTypes.bool.isRequired,
       text: PropTypes.string.isRequired,
     }).isRequired
   ).isRequired,

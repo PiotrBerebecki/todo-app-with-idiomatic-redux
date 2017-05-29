@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Todo = ({ onClick, isCompleted, text, id }) => {
+const Todo = ({ onClick, completed, text, id }) => {
   const handleClick = e => {
     onClick(id);
   };
@@ -10,7 +10,7 @@ const Todo = ({ onClick, isCompleted, text, id }) => {
     <li
       onClick={handleClick}
       style={{
-        textDecoration: isCompleted ? 'line-through' : 'none',
+        textDecoration: completed ? 'line-through' : 'none',
       }}
     >
       {text}
@@ -20,7 +20,7 @@ const Todo = ({ onClick, isCompleted, text, id }) => {
 
 Todo.propTypes = {
   onClick: PropTypes.func.isRequired,
-  isCompleted: PropTypes.bool.isRequired,
+  completed: PropTypes.bool.isRequired,
   text: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
 };
