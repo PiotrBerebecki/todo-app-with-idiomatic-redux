@@ -1,4 +1,5 @@
 import uuid from 'uuid/v4';
+import { getIsFetching } from './../reducers/index';
 
 import * as api from './../api/index';
 import {
@@ -39,7 +40,11 @@ const receiveTodos = (filter, response) => {
 };
 
 export const fetchTodos = filter => {
-  return dispatch => {
+  return (dispatch, getState) => {
+    if (getIsFetching(getState(), filter)) {
+      return Promise.resolve();
+    }
+
     dispatch(requestTodos(filter));
 
     return api.fetchTodos(filter).then(response => {
