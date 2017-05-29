@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 
-import { getVisibleTodos } from './../reducers/index';
+import { getVisibleTodos, getIsFetching } from './../reducers/index';
 import * as actions from '../actions';
 import Todo from './Todo';
 
@@ -21,7 +21,8 @@ class VisibleTodoList extends Component {
   }
 
   fetchData() {
-    const { filter, fetchTodos } = this.props;
+    const { filter, requestTodos, fetchTodos } = this.props;
+    requestTodos(filter);
     fetchTodos(filter);
   }
 
@@ -30,6 +31,11 @@ class VisibleTodoList extends Component {
   };
 
   render() {
+    const { todos, isFetching } = this.props;
+    if (isFetching && !todos.length) {
+      return <p>Loading...</p>;
+    }
+
     return (
       <ul>
         {this.props.todos.map(todo => (
@@ -55,6 +61,7 @@ const mapStateToProps = (state, ownProps) => {
   const filter = ownProps.match.params.filter || 'all';
   return {
     todos: getVisibleTodos(state, filter),
+    isFetching: getIsFetching(state, filter),
     filter,
   };
 };

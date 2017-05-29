@@ -1,7 +1,12 @@
 import uuid from 'uuid/v4';
 
 import * as api from './../api/index';
-import { ADD_TODO, TOGGLE_TODO, RECEIVE_TODOS } from './../constants/index';
+import {
+  ADD_TODO,
+  TOGGLE_TODO,
+  REQUEST_TODOS,
+  RECEIVE_TODOS,
+} from './../constants/index';
 
 export const addTodo = text => {
   return {
@@ -15,6 +20,13 @@ export const toggleTodo = id => {
   return {
     type: TOGGLE_TODO,
     id,
+  };
+};
+
+export const requestTodos = (filter, response) => {
+  return {
+    type: REQUEST_TODOS,
+    filter,
   };
 };
 
