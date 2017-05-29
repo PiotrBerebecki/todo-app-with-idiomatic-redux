@@ -1,10 +1,8 @@
-import { combineReducers } from 'redux';
-
-import { RECEIVE_TODOS } from './../constants/index';
+import { FETCH_TODOS_SUCCESS } from './../constants/index';
 
 const byId = (state = {}, action) => {
   switch (action.type) {
-    case RECEIVE_TODOS:
+    case FETCH_TODOS_SUCCESS:
       const nextState = { ...state };
       action.response.forEach(todo => {
         nextState[todo.id] = todo;

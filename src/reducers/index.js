@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-
 import byId, * as fromById from './byId';
 import createList, * as fromList from './createList';
 
@@ -23,4 +22,8 @@ export const getVisibleTodos = (state, filter) => {
 
 export const getIsFetching = (state, filter) => {
   return fromList.getIsFetching(state.listByFilter[filter]);
+};
+
+export const getErrorMessage = (state, filter) => {
+  return fromList.getErrorMessage(state.listByFilter[filter]);
 };
