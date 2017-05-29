@@ -1,4 +1,3 @@
-import uuid from 'uuid/v4';
 import { getIsFetching } from './../reducers/index';
 
 import * as api from './../api/index';
@@ -8,13 +7,17 @@ import {
   FETCH_TODOS_REQUEST,
   FETCH_TODOS_SUCCESS,
   FETCH_TODOS_FAILURE,
+  ADD_TODO_SUCCESS,
 } from './../constants/index';
 
 export const addTodo = text => {
-  return {
-    type: ADD_TODO,
-    id: uuid(),
-    text,
+  return dispatch => {
+    api.addTodo(text).then(response => {
+      dispatch({
+        type: ADD_TODO_SUCCESS,
+        response,
+      });
+    });
   };
 };
 
