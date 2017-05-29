@@ -23,7 +23,7 @@ export const toggleTodo = id => {
   };
 };
 
-export const requestTodos = (filter, response) => {
+const requestTodos = (filter, response) => {
   return {
     type: REQUEST_TODOS,
     filter,
@@ -39,7 +39,11 @@ const receiveTodos = (filter, response) => {
 };
 
 export const fetchTodos = filter => {
-  return api
-    .fetchTodos(filter)
-    .then(response => receiveTodos(filter, response));
+  return dispatch => {
+    dispatch(requestTodos(filter));
+
+    return api.fetchTodos(filter).then(response => {
+      dispatch(receiveTodos(filter, response));
+    });
+  };
 };
