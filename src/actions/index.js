@@ -1,8 +1,9 @@
-import { getIsFetching } from './../reducers/index';
+import { normalize } from 'normalizr';
 
+import * as schema from './schema';
 import * as api from './../api/index';
+import { getIsFetching } from './../reducers/index';
 import {
-  ADD_TODO,
   TOGGLE_TODO,
   FETCH_TODOS_REQUEST,
   FETCH_TODOS_SUCCESS,
@@ -15,7 +16,7 @@ export const addTodo = text => {
     api.addTodo(text).then(response => {
       dispatch({
         type: ADD_TODO_SUCCESS,
-        response,
+        response: normalize(response, schema.todo),
       });
     });
   };
@@ -44,7 +45,7 @@ export const fetchTodos = filter => {
         dispatch({
           type: FETCH_TODOS_SUCCESS,
           filter,
-          response,
+          response: normalize(response, schema.arrayOfTodos),
         });
       },
       error => {
